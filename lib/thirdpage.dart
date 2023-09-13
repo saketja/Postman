@@ -138,6 +138,7 @@ class _ThirdPageState extends State<ThirdPage> {
                                 width: 20,
                                 height:20,
                               ),
+                              SizedBox(width: 5),
                               Text(
                                 borrowedItems[index]['UserEmail'],
                                 style: TextStyle(
