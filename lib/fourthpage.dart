@@ -186,6 +186,7 @@ class _FourthPageState extends State<FourthPage> {
       body: ClipRRect(
         borderRadius: BorderRadius.circular(40.0),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Container(
             margin: EdgeInsets.all(20.0),
             padding: EdgeInsets.all(20.0),
@@ -252,6 +253,7 @@ class _FourthPageState extends State<FourthPage> {
                   child: TextField(
                     controller: ItemTitle,
                     style: TextStyle(
+                      fontFamily:'Poppins-Regular',
                       color: Colors.white,
                     ),
                     decoration:InputDecoration (
@@ -272,6 +274,7 @@ class _FourthPageState extends State<FourthPage> {
                     controller: ItemDescription,
                     style: TextStyle(
                       color: Colors.white,
+                      fontFamily:'Poppins-Regular',
                     ),
                     decoration:InputDecoration (
                       hintText: 'Item Description.....',
@@ -288,6 +291,7 @@ class _FourthPageState extends State<FourthPage> {
                         'Post the item for:',
                         style: TextStyle(
                           color: Colors.white,
+                          fontFamily:'Poppins-Regular',
                         ),
                       ),
                       SizedBox(width:20),
@@ -308,6 +312,7 @@ class _FourthPageState extends State<FourthPage> {
                         value: _current,
                         style: TextStyle(
                           color: Colors.white,
+                          fontFamily:'Poppins-Regular',
                         ),
                       )
                     ],
@@ -328,6 +333,7 @@ class _FourthPageState extends State<FourthPage> {
                           style: TextStyle(
                             fontSize: 25.0,
                             color: Colors.white,
+                            fontFamily:'Poppins-Regular',
                           ),
                         ),
                         Text(
@@ -335,6 +341,7 @@ class _FourthPageState extends State<FourthPage> {
                           style: TextStyle(
                             fontSize: 10.0,
                             color: Colors.white,
+                            fontFamily:'Poppins-Regular',
                           ),
                         ),
 
@@ -376,6 +383,7 @@ class _FourthPageState extends State<FourthPage> {
                                 style: TextStyle(
                                   fontSize: 10.0,
                                   color: Colors.white,
+                                  fontFamily:'Poppins-Regular',
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -384,6 +392,7 @@ class _FourthPageState extends State<FourthPage> {
                                 style: TextStyle(
                                   fontSize: 10.0,
                                   color: Colors.white,
+                                  fontFamily:'Poppins-Regular',
                                 ),
                               ),
                               Container(
@@ -465,6 +474,7 @@ class _FourthPageState extends State<FourthPage> {
                                 style: TextStyle(
                                   fontSize: 10.0,
                                   color: Colors.white,
+                                  fontFamily:'Poppins-Regular',
                                 ),
                               ),
                             ),

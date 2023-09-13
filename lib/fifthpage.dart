@@ -184,6 +184,7 @@ class _FifthpageState extends State<Fifthpage> {
       body: ClipRRect(
         borderRadius: BorderRadius.circular(40.0),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Container(
             margin: EdgeInsets.all(20.0),
             padding: EdgeInsets.all(20.0),
@@ -250,6 +251,7 @@ class _FifthpageState extends State<Fifthpage> {
                     controller: ItemTitle,
                     style: TextStyle(
                       color: Colors.white,
+                      fontFamily:'Poppins-Regular',
                     ),
                     decoration:InputDecoration (
                       hintText: 'Item Title (Keep it short).....',
@@ -269,6 +271,7 @@ class _FifthpageState extends State<Fifthpage> {
                     controller: ItemDescription,
                     style: TextStyle(
                       color: Colors.white,
+                      fontFamily:'Poppins-Regular',
                     ),
                     decoration:InputDecoration (
                       hintText: 'Item Description.....',
@@ -285,6 +288,7 @@ class _FifthpageState extends State<Fifthpage> {
                         'Post the item for:',
                         style: TextStyle(
                           color: Colors.white,
+                          fontFamily:'Poppins-Regular',
                         ),
                       ),
                       SizedBox(width:20),
@@ -305,6 +309,7 @@ class _FifthpageState extends State<Fifthpage> {
                         value: _current,
                         style: TextStyle(
                           color: Colors.white,
+                          fontFamily:'Poppins-Regular',
                         ),
                       )
                     ],
@@ -325,6 +330,7 @@ class _FifthpageState extends State<Fifthpage> {
                           style: TextStyle(
                             fontSize: 25.0,
                             color: Colors.white,
+                            fontFamily:'Poppins-Regular',
                           ),
                         ),
                         Text(
@@ -332,6 +338,7 @@ class _FifthpageState extends State<Fifthpage> {
                           style: TextStyle(
                             fontSize: 10.0,
                             color: Colors.white,
+                            fontFamily:'Poppins-Regular',
                           ),
                         ),
                         Container(
@@ -372,6 +379,7 @@ class _FifthpageState extends State<Fifthpage> {
                                 style: TextStyle(
                                   fontSize: 10.0,
                                   color: Colors.white,
+                                  fontFamily:'Poppins-Regular',
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -380,6 +388,7 @@ class _FifthpageState extends State<Fifthpage> {
                                 style: TextStyle(
                                   fontSize: 10.0,
                                   color: Colors.white,
+                                  fontFamily:'Poppins-Regular',
                                 ),
                               ),
                               Container(
@@ -461,6 +470,7 @@ class _FifthpageState extends State<Fifthpage> {
                               style: TextStyle(
                                 fontSize: 10.0,
                                 color: Colors.white,
+                                fontFamily:'Poppins-Regular',
                               ),
                             ),
                           ),

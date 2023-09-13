@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'ChatScreen.dart';
 
 class feedback extends StatefulWidget {
   const feedback({super.key});
@@ -37,7 +38,10 @@ class _feedbackState extends State<feedback> {
             ),
             IconButton(
               onPressed:(){
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatScreen()),
+                );
               },
               icon:Image(
                 image: AssetImage('assets/chats.png'),
@@ -59,6 +63,7 @@ class _feedbackState extends State<feedback> {
                 controller: feedback,
                 style: TextStyle(
                   color: Colors.white,
+                  fontFamily:'Poppins-Regular',
                 ),
                 decoration:InputDecoration (
                   hintText: 'Write a Feedback',
@@ -120,6 +125,7 @@ class _feedbackState extends State<feedback> {
                     child: Text(
                       'Submit',
                       style: TextStyle(
+                        fontFamily:'Poppins-Regular',
                         fontSize: 20,
                         color: Colors.white,
                       ),

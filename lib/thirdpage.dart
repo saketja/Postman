@@ -141,6 +141,7 @@ class _ThirdPageState extends State<ThirdPage> {
                               Text(
                                 borrowedItems[index]['UserEmail'],
                                 style: TextStyle(
+                                  fontFamily:'Poppins-Regular',
                                   color: Colors.white,
                                   fontSize: 13,
                                 ),
@@ -149,6 +150,7 @@ class _ThirdPageState extends State<ThirdPage> {
                               Text(
                                 'an hour ago',
                                 style: TextStyle(
+                                  fontFamily:'Poppins-Regular',
                                   color: Colors.white,
                                   fontSize: 10,
                                 ),
@@ -177,23 +179,23 @@ class _ThirdPageState extends State<ThirdPage> {
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(
-                                            padding: EdgeInsets.only(left: 5.0),
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 5.0),
                                             child: Text(
                                               borrowedItems[index]['ItemTitle'],
                                               style: TextStyle(
+                                                fontFamily:'Poppins-Regular',
                                                 color: Colors.white,
                                               ),
                                             ),
                                           ),
-                                          Container(
-                                            padding: EdgeInsets.only(right: 5.0),
-                                            child: Text(
-                                              '< ${borrowedItems[index]['SelectedDropdownoption']}',
-                                              style: TextStyle(
-                                                color: Color(0xFF15FE64),
-                                              ),
+                                          Text(
+                                            '< ${borrowedItems[index]['SelectedDropdownoption']}',
+                                            style: TextStyle(
+                                              fontFamily:'Poppins-Regular',
+                                              color: Color(0xFF15FE64),
                                             ),
+                                            textAlign: TextAlign.end,
                                           ),
                                         ],
                                       ),
@@ -204,6 +206,7 @@ class _ThirdPageState extends State<ThirdPage> {
                                           borrowedItems[index]['ItemDescription'],
                                           style: TextStyle(
                                             color: Colors.white,
+                                            fontFamily:'Poppins-Regular',
                                           ),
                                         ),
                                       ),

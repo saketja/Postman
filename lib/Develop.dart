@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ChatScreen.dart';
 
 class Developer extends StatelessWidget {
   const Developer({super.key});
@@ -25,7 +26,10 @@ class Developer extends StatelessWidget {
             ),
             IconButton(
               onPressed:(){
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatScreen()),
+                );
               },
               icon:Image(
                 image: AssetImage('assets/chats.png'),

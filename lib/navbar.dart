@@ -7,6 +7,7 @@ import 'feedback.dart';
 import 'Donate.dart';
 import 'Develop.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -87,7 +88,6 @@ class _NavBarState extends State<NavBar> {
       child: ListView(
         padding: EdgeInsets.fromLTRB(20,40, 0, 0),
         children: [
-
           Text(
             'Hi',
             style: TextStyle(
@@ -108,11 +108,25 @@ class _NavBarState extends State<NavBar> {
           SizedBox(height:20),
           Column(
             children: [
-              ClipOval(
-               child: Image(
-                  image: AssetImage('assets/image9.png'),
-                ),
+              Stack(
+                alignment: Alignment.center,
+                children:[
+                  CircularPercentIndicator(
+                    radius: 100.0, // Adjust the size as needed
+                    lineWidth: 10.0, // Adjust the thickness of the circle
+                    percent: count != null ? count / (count+count2) : 0.0, // Adjust maxCount as needed
+                    circularStrokeCap: CircularStrokeCap.round,
+                    backgroundColor: Color(0xFFA74FFF), // Change the background color
+                    progressColor: Color(0xFFFA00FF), // Change the foreground color
+                    center: ClipOval(
+                      child: Image(
+                        image: AssetImage('assets/image9.png'),
+                      ),
+                    ),
+                  ),
+                ],
               ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -121,6 +135,7 @@ class _NavBarState extends State<NavBar> {
                     style: TextStyle(
                       color: Color(0xFFA74FFF),
                       fontSize: 20,
+                      fontFamily: 'Poppins-Regular',
                     ),
                   ),
                   Text(
@@ -128,6 +143,7 @@ class _NavBarState extends State<NavBar> {
                     style: TextStyle(
                       color: Color(0xFFFA00FF),
                       fontSize: 20,
+                      fontFamily: 'Poppins-Regular',
                     ),
                   ),
                 ],

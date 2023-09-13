@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'ChatScreen.dart';
 
-class MyPosts extends StatelessWidget {
+class MyPosts extends StatefulWidget {
   const MyPosts({super.key});
 
+  @override
+  State<MyPosts> createState() => _MyPostsState();
+}
+
+class _MyPostsState extends State<MyPosts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +33,10 @@ class MyPosts extends StatelessWidget {
             ),
             IconButton(
               onPressed:(){
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatScreen()),
+                );
               },
               icon:Image(
                 image: AssetImage('assets/chats.png'),
@@ -70,9 +79,9 @@ class MyPosts extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Container(
                       margin: EdgeInsets.all(20.0),
-                      padding: EdgeInsets.all(20.0),
+                      padding: EdgeInsets.fromLTRB(2, 5, 2, 5),
                       decoration: BoxDecoration(
-                        color: Color(0xFF113962),
+                        color: Color(0xFF144272),
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: Column(
@@ -84,19 +93,29 @@ class MyPosts extends StatelessWidget {
                                 width: 20,
                                 height:20,
                               ),
+                              SizedBox(width: 5),
                               Text(
                                 PostItems[index]['UserEmail'],
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 13,
+                                  fontFamily:'Poppins-Regular',
                                 ),
                               ),
                               SizedBox(width:5),
+                              Text(
+                                'an hour ago',
+                                style: TextStyle(
+                                  fontFamily:'Poppins-Regular',
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                              ),
                             ],
                           ),
-                          SizedBox(height:20),
+                          SizedBox(height:10),
                           Container(
-                            height: 250,
+                            height: 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: NetworkImage(PostItems[index]['ImageUrl']),
@@ -105,36 +124,75 @@ class MyPosts extends StatelessWidget {
                             ),
                             child: Column(
                               children: [
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(10,5, 10, 0),
-                                  height: 30,
-                                  child: Row(
-                                    children: [
-                                      Text(
+                                SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: 5.0),
+                                      child: Text(
                                         PostItems[index]['ItemTitle'],
                                         style: TextStyle(
                                           color: Colors.white,
+                                          fontFamily:'Poppins-Regular',
                                         ),
                                       ),
-                                      SizedBox(width:140),
-                                      Text(
-                                        '< Required',
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 5.0),
+                                      child: Text(
+                                        '< ${PostItems[index]['SelectedDropdownoption']}',
                                         style: TextStyle(
-                                          color: Colors.green,
+                                          color: Color(0xFF5AF5FF),
+                                          fontFamily:'Poppins-Regular',
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height:30),
-                                Text(
-                                  PostItems[index]['ItemDescription'],
-                                  style: TextStyle(
-                                    color: Colors.white,
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                                  child:Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      PostItems[index]['ItemDescription'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily:'Poppins-Regular',
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+
+                                  });
+                                },
+                                icon:Image(
+                                  image: AssetImage('assets/bookmark.png'),
+                                  width:20,
+                                  height:20,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                  });
+                                },
+                                icon:Image(
+                                  image: AssetImage('assets/share.png'),
+                                  width:20,
+                                  height:20,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

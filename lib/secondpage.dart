@@ -145,6 +145,7 @@ class _SecondPageState extends State<SecondPage> {
                                 Text(
                                   borrowedItems[index]['UserEmail'],
                                   style: TextStyle(
+                                    fontFamily:'Poppins-Regular',
                                     color: Colors.white,
                                     fontSize: 13,
                                   ),
@@ -153,6 +154,7 @@ class _SecondPageState extends State<SecondPage> {
                                 Text(
                                   'an hour ago',
                                   style: TextStyle(
+                                    fontFamily:'Poppins-Regular',
                                     color: Colors.white,
                                     fontSize: 10,
                                   ),
@@ -180,6 +182,7 @@ class _SecondPageState extends State<SecondPage> {
                                       child: Text(
                                         borrowedItems[index]['ItemTitle'],
                                         style: TextStyle(
+                                          fontFamily:'Poppins-Regular',
                                           color: Colors.white,
                                         ),
                                       ),
@@ -189,6 +192,7 @@ class _SecondPageState extends State<SecondPage> {
                                       child: Text(
                                         '< ${borrowedItems[index]['SelectedDropdownoption']}',
                                         style: TextStyle(
+                                          fontFamily:'Poppins-Regular',
                                           color: Color(0xFF5AF5FF),
                                         ),
                                       ),
@@ -202,6 +206,7 @@ class _SecondPageState extends State<SecondPage> {
                                     child: Text(
                                       borrowedItems[index]['ItemDescription'],
                                       style: TextStyle(
+                                        fontFamily:'Poppins-Regular',
                                         color: Colors.white,
                                       ),
                                     ),
