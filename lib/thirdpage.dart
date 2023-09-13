@@ -200,6 +200,7 @@ class _ThirdPageState extends State<ThirdPage> {
                                         ],
                                       ),
                                       Container(
+                                        width: MediaQuery.of(context).size.width * 0.5,
                                         height: 120,
                                         padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
                                         child:Text(
