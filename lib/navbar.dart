@@ -1,3 +1,4 @@
+import 'package:borrow_app/BookmarkPosts.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -191,7 +192,10 @@ class _NavBarState extends State<NavBar> {
               SizedBox(width: 10.0),
               TextButton(
                 onPressed: (){
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BookmarkPosts()),
+                  );
                 },
                 child: Text(
                   'Bookmarked Posts',

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'navbar.dart';
-import 'secondpage.dart';
-import 'thirdpage.dart';
-import 'fifthpage.dart';
+import 'Lendpage.dart';
+import 'BorrowPage.dart';
+import 'LanPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -10,14 +10,14 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'ChatScreen.dart';
 
-class FourthPage extends StatefulWidget {
-  FourthPage({super.key});
+class Fifthpage extends StatefulWidget {
+  Fifthpage({super.key});
 
   @override
-  State<FourthPage> createState() => _FourthPageState();
+  State<Fifthpage> createState() => _FifthpageState();
 }
 
-class _FourthPageState extends State<FourthPage> {
+class _FifthpageState extends State<Fifthpage> {
   TextEditingController ItemTitle = new TextEditingController();
 
   TextEditingController ItemDescription = new TextEditingController();
@@ -56,8 +56,7 @@ class _FourthPageState extends State<FourthPage> {
         });
       }
     }
-    else{
-
+    else {
     }
   }
 
@@ -97,13 +96,12 @@ class _FourthPageState extends State<FourthPage> {
     }
   }
 
-  var option=['Sale','Rent','Available'];
+  var option=['Sale','Rent','Required'];
 
   var _current='Sale';
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Color(0xFF0A2647),
       drawer: NavBar(),
@@ -200,6 +198,24 @@ class _FourthPageState extends State<FourthPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
+                      child: TextButton(
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FourthPage()),
+                          );
+                        },
+                        child:Text(
+                          'लेन',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10.0,
+                              fontFamily: 'Poppins-Regular'
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
                       decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(
@@ -213,24 +229,6 @@ class _FourthPageState extends State<FourthPage> {
 
                         },
                         child:Text(
-                          'लेन',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10.0,
-                              fontFamily: 'Poppins-Regular'
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: TextButton(
-                        onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Fifthpage(),),
-                          );
-                        },
-                        child:Text(
                           'देन',
                           style: TextStyle(
                               color: Colors.white,
@@ -239,12 +237,11 @@ class _FourthPageState extends State<FourthPage> {
                           ),
                         ),
                       ),
-
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(10.0,10,10,5),
+                  margin: EdgeInsets.fromLTRB(10,10,10,5),
                   padding: EdgeInsets.all(20.0),
                   decoration: BoxDecoration(
                     color: Color(0xFF0A2647),
@@ -253,8 +250,8 @@ class _FourthPageState extends State<FourthPage> {
                   child: TextField(
                     controller: ItemTitle,
                     style: TextStyle(
-                      fontFamily:'Poppins-Regular',
                       color: Colors.white,
+                      fontFamily:'Poppins-Regular',
                     ),
                     decoration:InputDecoration (
                       hintText: 'Item Title (Keep it short).....',
@@ -344,9 +341,8 @@ class _FourthPageState extends State<FourthPage> {
                             fontFamily:'Poppins-Regular',
                           ),
                         ),
-
                         Container(
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: Colors.white,
@@ -363,7 +359,7 @@ class _FourthPageState extends State<FourthPage> {
                           )
                               :Column(
                             children: [
-                                Container(
+                              Container(
                                 margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
                                 width: 50,
                                 height:50,
@@ -371,8 +367,8 @@ class _FourthPageState extends State<FourthPage> {
                                   onPressed: (){
                                     _openGallery();
                                   },
-                                  icon: Image(
-                                    image: AssetImage('assets/cloud.png'),
+                                  icon:Image(
+                                    image:AssetImage('assets/cloud.png'),
                                     width: 50,
                                     height:50,
                                   ),
@@ -403,7 +399,7 @@ class _FourthPageState extends State<FourthPage> {
                                   onPressed: (){
                                     _openCamera();
                                   },
-                                  icon: ClipOval(
+                                  icon:ClipOval(
                                     child: Container(
                                       color: Color(0xFFFBB400),
                                       child: Image(
@@ -420,64 +416,64 @@ class _FourthPageState extends State<FourthPage> {
                         ),
                         SizedBox(height:10),
                         TextButton(
-                            onPressed: () async {
-                              FirebaseFirestore firestore = FirebaseFirestore.instance;
-                              FirebaseAuth auth = FirebaseAuth.instance;
-                              User?user=auth.currentUser;
-                              if (user != null) {
-                                String userEmail = user.email ?? "";
-                                Map<String, dynamic> data = {
-                                  "ItemTitle": ItemTitle.text,
-                                  "ItemDescription": ItemDescription.text,
-                                  "UserEmail": userEmail,
-                                  "SelectedDropdownoption":_current,
-                                  "Bookmarked":'false',
-                                };
-                                try {
-                                  if (imageFile != null) {
-                                    final firebase_storage
-                                        .Reference storageReference =
-                                    firebase_storage.FirebaseStorage.instance
-                                        .ref()
-                                        .child('images/${DateTime
-                                        .now()
-                                        .millisecondsSinceEpoch}.jpg');
-                                    await storageReference.putFile(imageFile!);
-                                    String imageUrl = await storageReference
-                                        .getDownloadURL();
-                                    data["ImageUrl"] = imageUrl;
-                                  }
-                                  await firestore.collection("borrow").add(
-                                      data);
-                                  await firestore.collection("post").add(
-                                      data);
-
-                                  ItemTitle.clear();
-                                  ItemDescription.clear();
-                                  imageFile = null;
-                                  setState(() {
-                                    _current = 'Sale';
-                                  });
-                                } catch (e) {
-                                  print("Error adding document: $e");
+                          onPressed: () async {
+                            FirebaseFirestore firestore = FirebaseFirestore.instance;
+                            FirebaseAuth auth = FirebaseAuth.instance;
+                            User?user=auth.currentUser;
+                            if (user != null) {
+                              String userEmail = user.email ?? "";
+                              Map<String, dynamic> data = {
+                                "ItemTitle": ItemTitle.text,
+                                "ItemDescription": ItemDescription.text,
+                                "UserEmail": userEmail,
+                                "SelectedDropdownoption":_current,
+                                "Bookmarked":'false',
+                              };
+                              try {
+                                if (imageFile != null) {
+                                  final firebase_storage
+                                      .Reference storageReference =
+                                  firebase_storage.FirebaseStorage.instance
+                                      .ref()
+                                      .child('images/${DateTime
+                                      .now()
+                                      .millisecondsSinceEpoch}.jpg');
+                                  await storageReference.putFile(imageFile!);
+                                  String imageUrl = await storageReference
+                                      .getDownloadURL();
+                                  data["ImageUrl"] = imageUrl;
                                 }
+                                await firestore.collection("lend").add(
+                                    data);
+                                await firestore.collection("post").add(
+                                    data);
+
+                                ItemTitle.clear();
+                                ItemDescription.clear();
+                                imageFile = null;
+                                setState(() {
+                                  _current = 'Sale';
+                                });
+                              } catch (e) {
+                                print("Error adding document: $e");
                               }
-                            },
-                            child:Container(
-                              padding: EdgeInsets.fromLTRB(25, 10, 25, 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Color(0xFF0D9393),
-                              ),
-                              child: Text(
-                                'POST',
-                                style: TextStyle(
-                                  fontSize: 10.0,
-                                  color: Colors.white,
-                                  fontFamily:'Poppins-Regular',
-                                ),
+                            }
+                          },
+                          child:Container(
+                            padding: EdgeInsets.fromLTRB(25, 10, 25, 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color(0xFF0D9393),
+                            ),
+                            child: Text(
+                              'POST',
+                              style: TextStyle(
+                                fontSize: 10.0,
+                                color: Colors.white,
+                                fontFamily:'Poppins-Regular',
                               ),
                             ),
+                          ),
                         ),
                       ],
                     ),
@@ -489,5 +485,6 @@ class _FourthPageState extends State<FourthPage> {
         ),
       ),
     );
+
   }
 }

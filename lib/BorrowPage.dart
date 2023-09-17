@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'navbar.dart';
-import 'secondpage.dart';
-import 'fourthpage.dart';
+import 'Lendpage.dart';
+import 'LanPage.dart';
 import 'ChatScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ThirdPage extends StatefulWidget {
   const ThirdPage({super.key});
@@ -11,7 +12,52 @@ class ThirdPage extends StatefulWidget {
   @override
   State<ThirdPage> createState() => _ThirdPageState();
 }
+
 class _ThirdPageState extends State<ThirdPage> {
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> toggleBookmark(Map<String, dynamic> itemData) async {
+    try {
+      final User? user = _auth.currentUser;
+      final String? userEmail = user?.email;
+
+      final QuerySnapshot<Map<String, dynamic>> bookmarks = await FirebaseFirestore
+          .instance
+          .collection('bookmarked')
+          .where('UserEmail', isEqualTo: userEmail)
+          .where('BorrowedItemData', isEqualTo: itemData)
+          .get();
+
+      if (bookmarks.docs.isNotEmpty) {
+        // Item is already bookmarked, remove it
+        final docId = bookmarks.docs.first.id;
+        await FirebaseFirestore.instance.collection('bookmarked').doc(docId).delete();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Item removed from bookmarks!'),
+          ),
+        );
+      } else {
+        // Item is not bookmarked, add it to bookmarks
+        await FirebaseFirestore.instance.collection('bookmarked').add({
+          'UserEmail': userEmail,
+          'BorrowedItemData': itemData,
+          'Timestamp': FieldValue.serverTimestamp(),
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Item bookmarked!'),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Error handling bookmark: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,6 +165,7 @@ class _ThirdPageState extends State<ThirdPage> {
             child: ListView.builder(
               itemCount: borrowedItems.length,
               itemBuilder: (context, index) {
+                final item = borrowedItems[index];
                 return ClipRRect(
                   borderRadius: BorderRadius.circular(40.0),
                   child: SingleChildScrollView(
@@ -223,8 +270,7 @@ class _ThirdPageState extends State<ThirdPage> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  setState(() {
-                                  });
+                                  toggleBookmark(item);
                                 },
                                 icon:Image(
                                   image: AssetImage('assets/bookmark.png'),
@@ -234,8 +280,6 @@ class _ThirdPageState extends State<ThirdPage> {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  setState(() {
-                                  });
                                 },
                                 icon:Image(
                                   image: AssetImage('assets/share.png'),

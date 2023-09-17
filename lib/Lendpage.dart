@@ -1,10 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'navbar.dart';
-import 'thirdpage.dart';
-import 'fourthpage.dart';
+import 'BorrowPage.dart';
+import 'LanPage.dart';
 import 'ChatScreen.dart';
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SecondPage extends StatefulWidget {
   SecondPage({super.key});
@@ -14,6 +15,48 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> toggleBookmark(Map<String, dynamic> itemData) async {
+    try {
+      final User? user = _auth.currentUser;
+      final String? userEmail = user?.email;
+
+      final QuerySnapshot<Map<String, dynamic>> bookmarks = await FirebaseFirestore
+          .instance
+          .collection('bookmarked')
+          .where('UserEmail', isEqualTo: userEmail)
+          .where('BorrowedItemData', isEqualTo: itemData)
+          .get();
+
+      if (bookmarks.docs.isNotEmpty) {
+        // Item is already bookmarked, remove it
+        final docId = bookmarks.docs.first.id;
+        await FirebaseFirestore.instance.collection('bookmarked').doc(docId).delete();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Item removed from bookmarks!'),
+          ),
+        );
+      } else {
+        // Item is not bookmarked, add it to bookmarks
+        await FirebaseFirestore.instance.collection('bookmarked').add({
+          'UserEmail': userEmail,
+          'BorrowedItemData': itemData,
+          'Timestamp': FieldValue.serverTimestamp(),
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Item bookmarked!'),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Error handling bookmark: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,20 +73,20 @@ class _SecondPageState extends State<SecondPage> {
               child: Text(
                 'Lend Requests',
                 style: TextStyle(
-                  fontFamily:'Poppins-Regular',
+                  fontFamily: 'Poppins-Regular',
                   fontSize: 30.0,
                   color: Colors.white,
                 ),
               ),
             ),
             IconButton(
-              onPressed:(){
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ChatScreen()),
                 );
               },
-              icon:Image(
+              icon: Image(
                 image: AssetImage('assets/chats.png'),
               ),
             ),
@@ -56,19 +99,17 @@ class _SecondPageState extends State<SecondPage> {
         unselectedItemColor: Colors.white,
         items: [
           BottomNavigationBarItem(
-              icon: GestureDetector(
-                onTap: (){
-
-                },
-                child: Image(
-                  image: AssetImage('assets/Group.png'),
-                ),
+            icon: GestureDetector(
+              onTap: () {},
+              child: Image(
+                image: AssetImage('assets/Group.png'),
               ),
+            ),
             label: 'Lend',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => FourthPage()),
@@ -82,7 +123,7 @@ class _SecondPageState extends State<SecondPage> {
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ThirdPage()),
@@ -96,7 +137,7 @@ class _SecondPageState extends State<SecondPage> {
           ),
         ],
       ),
-      body:StreamBuilder<QuerySnapshot>(
+      body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('lend').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -121,6 +162,7 @@ class _SecondPageState extends State<SecondPage> {
             child: ListView.builder(
               itemCount: borrowedItems.length,
               itemBuilder: (context, index) {
+                final item = borrowedItems[index];
                 return ClipRRect(
                   borderRadius: BorderRadius.circular(40.0),
                   child: SingleChildScrollView(
@@ -139,22 +181,22 @@ class _SecondPageState extends State<SecondPage> {
                                 Image(
                                   image: AssetImage('assets/image.png'),
                                   width: 20,
-                                  height:20,
+                                  height: 20,
                                 ),
                                 SizedBox(width: 5),
                                 Text(
                                   borrowedItems[index]['UserEmail'],
                                   style: TextStyle(
-                                    fontFamily:'Poppins-Regular',
+                                    fontFamily: 'Poppins-Regular',
                                     color: Colors.white,
                                     fontSize: 13,
                                   ),
                                 ),
-                                SizedBox(width:5),
+                                SizedBox(width: 5),
                                 Text(
                                   'an hour ago',
                                   style: TextStyle(
-                                    fontFamily:'Poppins-Regular',
+                                    fontFamily: 'Poppins-Regular',
                                     color: Colors.white,
                                     fontSize: 10,
                                   ),
@@ -162,7 +204,7 @@ class _SecondPageState extends State<SecondPage> {
                               ],
                             ),
                           ),
-                          SizedBox(height:10),
+                          SizedBox(height: 10),
                           Container(
                             height: 200,
                             decoration: BoxDecoration(
@@ -182,7 +224,7 @@ class _SecondPageState extends State<SecondPage> {
                                       child: Text(
                                         borrowedItems[index]['ItemTitle'],
                                         style: TextStyle(
-                                          fontFamily:'Poppins-Regular',
+                                          fontFamily: 'Poppins-Regular',
                                           color: Colors.white,
                                         ),
                                       ),
@@ -192,7 +234,7 @@ class _SecondPageState extends State<SecondPage> {
                                       child: Text(
                                         '< ${borrowedItems[index]['SelectedDropdownoption']}',
                                         style: TextStyle(
-                                          fontFamily:'Poppins-Regular',
+                                          fontFamily: 'Poppins-Regular',
                                           color: Color(0xFF5AF5FF),
                                         ),
                                       ),
@@ -201,12 +243,12 @@ class _SecondPageState extends State<SecondPage> {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                                  child:Align(
+                                  child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       borrowedItems[index]['ItemDescription'],
                                       style: TextStyle(
-                                        fontFamily:'Poppins-Regular',
+                                        fontFamily: 'Poppins-Regular',
                                         color: Colors.white,
                                       ),
                                     ),
@@ -220,24 +262,22 @@ class _SecondPageState extends State<SecondPage> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  setState(() {
-                                  });
+                                  toggleBookmark(item);
                                 },
-                                icon:Image(
+                                icon: Image(
                                   image: AssetImage('assets/bookmark.png'),
-                                  width:20,
-                                  height:20,
+                                  width: 20,
+                                  height: 20,
                                 ),
                               ),
                               IconButton(
                                 onPressed: () {
-                                  setState(() {
-                                  });
+                                  setState(() {});
                                 },
-                                icon:Image(
+                                icon: Image(
                                   image: AssetImage('assets/share.png'),
-                                  width:20,
-                                  height:20,
+                                  width: 20,
+                                  height: 20,
                                 ),
                               ),
                             ],
@@ -255,4 +295,3 @@ class _SecondPageState extends State<SecondPage> {
     );
   }
 }
-
