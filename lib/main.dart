@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'Lendpage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Exit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,6 @@ void main() async {
 }
 class Home extends StatelessWidget {
   Home({super.key});
-
   void _handleGoogleSignIn(BuildContext context) async{
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -78,98 +78,101 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF0A2647),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(0,89.8,0,0),
-              child: Image(
-                image: AssetImage('assets/app1.png'),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 51.4, 0,0),
-              child: Text(
-                'BORROW',
-                style: TextStyle(
-                  fontSize:70.37,
-                  fontFamily:'EuphoriaScript',
-                  color: Colors.white,
+    return WillPopScope(
+      onWillPop: ()=>showExitConfirmationDialog(context),
+      child: Scaffold(
+        backgroundColor: Color(0xFF0A2647),
+        body: Center(
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.fromLTRB(0,89.8,0,0),
+                child: Image(
+                  image: AssetImage('assets/app1.png'),
                 ),
               ),
-            ),
-            Expanded(
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Image(image: AssetImage('assets/Vector1.png'),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 51.4, 0,0),
+                child: Text(
+                  'BORROW',
+                  style: TextStyle(
+                    fontSize:70.37,
+                    fontFamily:'EuphoriaScript',
+                    color: Colors.white,
                   ),
-                  Positioned(
-                    top: 0,
-                    child: Image(
-                      image: AssetImage('assets/background.png'),
-                    ),
-                  ),
-                  Positioned(
-                    top: 150,
-                    child: Container(
-                      padding: EdgeInsets.all(20.0),
-                      color: Colors.black.withOpacity(0),
-                      child: Text(
-                        'Log in to your Account',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontFamily: 'Poppins-Regular'
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 240,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(80, 20, 80, 20),
-                        color: Color(0xFF0A2647),
-                        child: Row(
-                          children: [
-                            ClipOval(
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                width: 30,
-                                height: 30,
-                                color: Colors.white,
-                                child: Image(
-                                  image: AssetImage('assets/google.png'),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            TextButton(
-                              onPressed: (){
-                                _handleGoogleSignIn(context);
-                              },
-                              child:Text(
-                                'Login with Google',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontFamily: 'Poppins-Regular'
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image(image: AssetImage('assets/Vector1.png'),
+                    ),
+                    Positioned(
+                      top: 0,
+                      child: Image(
+                        image: AssetImage('assets/background.png'),
+                      ),
+                    ),
+                    Positioned(
+                      top: 150,
+                      child: Container(
+                        padding: EdgeInsets.all(20.0),
+                        color: Colors.black.withOpacity(0),
+                        child: Text(
+                          'Log in to your Account',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25.0,
+                              fontFamily: 'Poppins-Regular'
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 240,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50.0),
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(80, 20, 80, 20),
+                          color: Color(0xFF0A2647),
+                          child: Row(
+                            children: [
+                              ClipOval(
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  width: 30,
+                                  height: 30,
+                                  color: Colors.white,
+                                  child: Image(
+                                    image: AssetImage('assets/google.png'),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              TextButton(
+                                onPressed: (){
+                                  _handleGoogleSignIn(context);
+                                },
+                                child:Text(
+                                  'Login with Google',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15.0,
+                                      fontFamily: 'Poppins-Regular'
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

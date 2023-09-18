@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ChatScreen.dart';
-
+import 'Custom_App_bar.dart';
 class Donate extends StatelessWidget {
   const Donate({super.key});
 
@@ -8,34 +7,10 @@ class Donate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF0A2647),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF144272),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Donate',
-                style: TextStyle(
-                  fontFamily:'Poppins-Regular',
-                  fontSize: 30.0,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            IconButton(
-              onPressed:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ChatScreen()),
-                );
-              },
-              icon:Image(
-                image: AssetImage('assets/chats.png'),
-              ),
-            ),
-          ],
+      appBar: PreferredSize(
+        preferredSize: AppBar().preferredSize,
+        child: CustomAppBar(
+          title:'Donate',
         ),
       ),
       body: Center(

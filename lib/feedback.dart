@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'ChatScreen.dart';
+import 'Custom_App_bar.dart';
 
 class feedback extends StatefulWidget {
   const feedback({super.key});
@@ -20,34 +20,10 @@ class _feedbackState extends State<feedback> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF0A2647),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF144272),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Feedback Page',
-                style: TextStyle(
-                  fontFamily:'Poppins-Regular',
-                  fontSize: 30.0,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            IconButton(
-              onPressed:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ChatScreen()),
-                );
-              },
-              icon:Image(
-                image: AssetImage('assets/chats.png'),
-              ),
-            ),
-          ],
+      appBar: PreferredSize(
+        preferredSize: AppBar().preferredSize,
+        child: CustomAppBar(
+          title:'Feedback Page',
         ),
       ),
       body: Center(

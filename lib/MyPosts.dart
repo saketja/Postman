@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'ChatScreen.dart';
+import 'Custom_App_bar.dart';
 
 class MyPosts extends StatefulWidget {
   const MyPosts({super.key});
@@ -15,34 +15,10 @@ class _MyPostsState extends State<MyPosts> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF0A2647),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF144272),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'My Posts',
-                style: TextStyle(
-                  fontFamily:'Poppins-Regular',
-                  fontSize: 30.0,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            IconButton(
-              onPressed:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ChatScreen()),
-                );
-              },
-              icon:Image(
-                image: AssetImage('assets/chats.png'),
-              ),
-            ),
-          ],
+      appBar: PreferredSize(
+        preferredSize: AppBar().preferredSize,
+        child: CustomAppBar(
+          title:'My Posts',
         ),
       ),
       body:StreamBuilder<QuerySnapshot>(

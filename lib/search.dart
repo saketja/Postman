@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'ChatRoom.dart';
+import 'Custom_App_bar.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -45,23 +46,10 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF0A2647),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF144272),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Search Screen',
-                style: TextStyle(
-                  fontFamily: 'Poppins-Regular',
-                  fontSize: 30.0,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
+      appBar: PreferredSize(
+        preferredSize: AppBar().preferredSize,
+        child: CustomAppBar(
+          title:'Search Screen',
         ),
       ),
       body: Container(
