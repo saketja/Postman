@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'Exit.dart';
 import 'BottomNavigation_Bar.dart';
+import 'package:share/share.dart';
 
 class BorrowPage extends StatefulWidget {
   const BorrowPage({super.key});
@@ -15,6 +16,15 @@ class BorrowPage extends StatefulWidget {
 
 class _BorrowPageState extends State<BorrowPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void shareItem(Map<String, dynamic> itemData) {
+    Share.share('Check out this item:\n'
+        'Title: ${itemData['ItemTitle']}\n'
+        'Description: ${itemData['ItemDescription']}\n'
+        'Email Id:${itemData['UserEmail']}\n'
+        'Time:${itemData['Timestamp'].toDate().toString()}\n'
+        'Image URL: ${itemData['ImageUrl']}\n');
+  }
 
   Future<void> toggleBookmark(Map<String, dynamic> itemData) async {
     try {
@@ -234,7 +244,9 @@ class _BorrowPageState extends State<BorrowPage> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    shareItem(item);
+                                  },
                                   icon: Image(
                                     image: AssetImage('assets/share.png'),
                                     width: 20,

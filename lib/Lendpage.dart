@@ -6,9 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'Exit.dart';
 import 'Custom_App_bar.dart';
 import 'BottomNavigation_Bar.dart';
+import 'package:share/share.dart';
 
 class LendPage extends StatefulWidget {
   LendPage({super.key});
+
   @override
   State<LendPage> createState() => _LendPageState();
 }
@@ -27,28 +29,23 @@ class _LendPageState extends State<LendPage> {
               .where('UserEmail', isEqualTo: userEmail)
               .where('BorrowedItemData', isEqualTo: itemData)
               .get();
-
       if (bookmarks.docs.isNotEmpty) {
-        // Item is already bookmarked, remove it
         final docId = bookmarks.docs.first.id;
         await FirebaseFirestore.instance
             .collection('bookmarked')
             .doc(docId)
             .delete();
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Item removed from bookmarks!'),
           ),
         );
       } else {
-        // Item is not bookmarked, add it to bookmarks
         await FirebaseFirestore.instance.collection('bookmarked').add({
           'UserEmail': userEmail,
           'BorrowedItemData': itemData,
           'Timestamp': FieldValue.serverTimestamp(),
         });
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Item bookmarked!'),
@@ -58,6 +55,15 @@ class _LendPageState extends State<LendPage> {
     } catch (e) {
       print('Error handling bookmark: $e');
     }
+  }
+
+  void shareItem(Map<String, dynamic> itemData) {
+    Share.share('Check out this item:\n'
+        'Title: ${itemData['ItemTitle']}\n'
+        'Description: ${itemData['ItemDescription']}\n'
+        'Email Id:${itemData['UserEmail']}\n'
+        'Time:${itemData['Timestamp'].toDate().toString()}\n'
+        'Image URL: ${itemData['ImageUrl']}\n');
   }
 
   @override
@@ -221,7 +227,7 @@ class _LendPageState extends State<LendPage> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    setState(() {});
+                                    shareItem(item);
                                   },
                                   icon: Image(
                                     image: AssetImage('assets/share.png'),

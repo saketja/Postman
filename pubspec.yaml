@@ -42,6 +42,7 @@ dependencies:
   firebase_storage:
   flutter_rating_bar:
   percent_indicator:
+  share:
 
 dev_dependencies:
   flutter_test:

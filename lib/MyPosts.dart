@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Custom_App_bar.dart';
+import 'package:share/share.dart';
 
 class MyPosts extends StatefulWidget {
   const MyPosts({super.key});
@@ -80,7 +81,11 @@ class _MyPostsState extends State<MyPosts> {
                               ),
                               SizedBox(width:5),
                               Text(
-                                'an hour ago',
+                                PostItems[index]['Timestamp'] != null
+                                    ? PostItems[index]['Timestamp']
+                                    .toDate()
+                                    .toString()
+                                    : 'No Timestamp',
                                 style: TextStyle(
                                   fontFamily:'Poppins-Regular',
                                   color: Colors.white,
@@ -147,9 +152,6 @@ class _MyPostsState extends State<MyPosts> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  setState(() {
-
-                                  });
                                 },
                                 icon:Image(
                                   image: AssetImage('assets/bookmark.png'),
@@ -159,8 +161,14 @@ class _MyPostsState extends State<MyPosts> {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  setState(() {
-                                  });
+                                  Share.share(
+                                    'Check out this post:'
+                                        '\nTitle:${PostItems[index]['ItemTitle']}'
+                                        '\nDescription:${PostItems[index]['ItemDescription']}'
+                                        '\nEmail_Id:${PostItems[index]['UserEmail']}'
+                                        '\nTime:${PostItems[index]['Timestamp'].toDate().toString()}'
+                                        '\nImage_Url:${PostItems[index]['ImageUrl']}',
+                                  );
                                 },
                                 icon:Image(
                                   image: AssetImage('assets/share.png'),

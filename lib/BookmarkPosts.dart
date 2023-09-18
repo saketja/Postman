@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'Custom_App_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:share/share.dart';
 
 class BookmarkPosts extends StatefulWidget {
   const BookmarkPosts({super.key});
@@ -11,7 +12,6 @@ class BookmarkPosts extends StatefulWidget {
 }
 
 class _BookmarkPostsState extends State<BookmarkPosts> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +19,7 @@ class _BookmarkPostsState extends State<BookmarkPosts> {
       appBar: PreferredSize(
         preferredSize: AppBar().preferredSize,
         child: CustomAppBar(
-          title:'Bookmark Posts',
+          title: 'Bookmark Posts',
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -72,7 +72,9 @@ class _BookmarkPostsState extends State<BookmarkPosts> {
                                   height: 20,
                                 ),
                                 Text(
-                                  borrowedItems[index]['BorrowedItemData']['UserEmail']??'',
+                                  borrowedItems[index]['BorrowedItemData']
+                                          ['UserEmail'] ??
+                                      '',
                                   style: TextStyle(
                                     fontFamily: 'Poppins-Regular',
                                     color: Colors.white,
@@ -81,10 +83,13 @@ class _BookmarkPostsState extends State<BookmarkPosts> {
                                 ),
                                 SizedBox(width: 5),
                                 Container(
-                                    width: MediaQuery.of(context).size.width * 0.25,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
                                   child: Text(
                                     borrowedItems[index]['Timestamp'] != null
-                                        ? borrowedItems[index]['Timestamp'].toDate().toString()
+                                        ? borrowedItems[index]['Timestamp']
+                                            .toDate()
+                                            .toString()
                                         : 'No Timestamp',
                                     style: TextStyle(
                                       fontFamily: 'Poppins-Regular',
@@ -101,7 +106,9 @@ class _BookmarkPostsState extends State<BookmarkPosts> {
                             height: 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: NetworkImage(borrowedItems[index]['BorrowedItemData']['ImageUrl']??''),
+                                image: NetworkImage(borrowedItems[index]
+                                        ['BorrowedItemData']['ImageUrl'] ??
+                                    ''),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -109,12 +116,15 @@ class _BookmarkPostsState extends State<BookmarkPosts> {
                               children: [
                                 SizedBox(height: 10),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       padding: EdgeInsets.only(left: 5.0),
                                       child: Text(
-                                        borrowedItems[index]['BorrowedItemData']['ItemTitle']??'',
+                                        borrowedItems[index]['BorrowedItemData']
+                                                ['ItemTitle'] ??
+                                            '',
                                         style: TextStyle(
                                           fontFamily: 'Poppins-Regular',
                                           color: Colors.white,
@@ -124,7 +134,7 @@ class _BookmarkPostsState extends State<BookmarkPosts> {
                                     Container(
                                       padding: EdgeInsets.only(right: 5.0),
                                       child: Text(
-                                        '< ${borrowedItems[index]['BorrowedItemData']['SelectedDropdownoption']??''}',
+                                        '< ${borrowedItems[index]['BorrowedItemData']['SelectedDropdownoption'] ?? ''}',
                                         style: TextStyle(
                                           fontFamily: 'Poppins-Regular',
                                           color: Color(0xFF5AF5FF),
@@ -138,7 +148,9 @@ class _BookmarkPostsState extends State<BookmarkPosts> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      borrowedItems[index]['BorrowedItemData']['ItemDescription']??'',
+                                      borrowedItems[index]['BorrowedItemData']
+                                              ['ItemDescription'] ??
+                                          '',
                                       style: TextStyle(
                                         fontFamily: 'Poppins-Regular',
                                         color: Colors.white,
@@ -153,21 +165,28 @@ class _BookmarkPostsState extends State<BookmarkPosts> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               IconButton(
-                                onPressed: () {
-                                },
-                                icon:Image(
+                                onPressed: () {},
+                                icon: Image(
                                   image: AssetImage('assets/bookmark.png'),
-                                  width:20,
-                                  height:20,
+                                  width: 20,
+                                  height: 20,
                                 ),
                               ),
                               IconButton(
                                 onPressed: () {
+                                  Share.share(
+                                    'Check out this post:'
+                                        '\nTitle:${borrowedItems[index]['BorrowedItemData']['ItemTitle']}'
+                                        '\nDescription:${borrowedItems[index]['BorrowedItemData']['ItemDescription']}'
+                                        '\nEmail_Id:${borrowedItems[index]['BorrowedItemData']['UserEmail']}'
+                                        '\nTime:${borrowedItems[index]['Timestamp'].toDate().toString()}'
+                                        '\nImage_Url:${borrowedItems[index]['BorrowedItemData']['ImageUrl']}',
+                                  );
                                 },
-                                icon:Image(
+                                icon: Image(
                                   image: AssetImage('assets/share.png'),
-                                  width:20,
-                                  height:20,
+                                  width: 20,
+                                  height: 20,
                                 ),
                               ),
                             ],
