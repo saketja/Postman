@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ChatScreen.dart';
 
 class Donate extends StatelessWidget {
   const Donate({super.key});
@@ -25,10 +26,33 @@ class Donate extends StatelessWidget {
             ),
             IconButton(
               onPressed:(){
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatScreen()),
+                );
               },
               icon:Image(
                 image: AssetImage('assets/chats.png'),
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Image(
+                image: AssetImage('assets/QRcode.jpg'),
+              ),
+            ),
+            Text(
+                'QR Code',
+              style: TextStyle(
+                fontSize: 20,
+                color:Colors.white,
+                fontFamily: 'Poppins-Regular',
               ),
             ),
           ],

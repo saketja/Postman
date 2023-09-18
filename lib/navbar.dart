@@ -113,12 +113,12 @@ class _NavBarState extends State<NavBar> {
                 alignment: Alignment.center,
                 children:[
                   CircularPercentIndicator(
-                    radius: 100.0, // Adjust the size as needed
-                    lineWidth: 10.0, // Adjust the thickness of the circle
-                    percent: count != null ? count / (count+count2) : 0.0, // Adjust maxCount as needed
+                    radius: 100.0,
+                    lineWidth: 10.0,
+                    percent: (count ?? 0) / ((count ?? 0) + (count2 ?? 0)),
                     circularStrokeCap: CircularStrokeCap.round,
-                    backgroundColor: Color(0xFFA74FFF), // Change the background color
-                    progressColor: Color(0xFFFA00FF), // Change the foreground color
+                    backgroundColor: Color(0xFFA74FFF),
+                    progressColor: Color(0xFFFA00FF),
                     center: ClipOval(
                       child: Image(
                         image: AssetImage('assets/image9.png'),

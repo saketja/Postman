@@ -7,14 +7,14 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class SecondPage extends StatefulWidget {
-  SecondPage({super.key});
+class LendPage extends StatefulWidget {
+  LendPage({super.key});
 
   @override
-  State<SecondPage> createState() => _SecondPageState();
+  State<LendPage> createState() => _LendPageState();
 }
 
-class _SecondPageState extends State<SecondPage> {
+class _LendPageState extends State<LendPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> toggleBookmark(Map<String, dynamic> itemData) async {
@@ -112,7 +112,7 @@ class _SecondPageState extends State<SecondPage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FourthPage()),
+                  MaterialPageRoute(builder: (context) => LanPage()),
                 );
               },
               child: Image(
@@ -126,7 +126,7 @@ class _SecondPageState extends State<SecondPage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ThirdPage()),
+                  MaterialPageRoute(builder: (context) => BorrowPage()),
                 );
               },
               child: Image(
@@ -175,34 +175,37 @@ class _SecondPageState extends State<SecondPage> {
                       ),
                       child: Column(
                         children: [
-                          Container(
-                            child: Row(
-                              children: [
-                                Image(
-                                  image: AssetImage('assets/image.png'),
-                                  width: 20,
-                                  height: 20,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Image(
+                                image: AssetImage('assets/image.png'),
+                                width: 20,
+                                height: 20,
+                              ),
+                              Text(
+                                borrowedItems[index]['UserEmail'],
+                                style: TextStyle(
+                                  fontFamily: 'Poppins-Regular',
+                                  color: Colors.white,
+                                  fontSize: 13,
                                 ),
-                                SizedBox(width: 5),
-                                Text(
-                                  borrowedItems[index]['UserEmail'],
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins-Regular',
-                                    color: Colors.white,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  'an hour ago',
+                              ),
+                              SizedBox(width: 5),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                child: Text(
+                                  borrowedItems[index]['Timestamp'] != null
+                                      ? borrowedItems[index]['Timestamp'].toDate().toString()
+                                      : 'No Timestamp',
                                   style: TextStyle(
                                     fontFamily: 'Poppins-Regular',
                                     color: Colors.white,
                                     fontSize: 10,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                           SizedBox(height: 10),
                           Container(

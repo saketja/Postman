@@ -6,14 +6,14 @@ import 'ChatScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ThirdPage extends StatefulWidget {
-  const ThirdPage({super.key});
+class BorrowPage extends StatefulWidget {
+  const BorrowPage({super.key});
 
   @override
-  State<ThirdPage> createState() => _ThirdPageState();
+  State<BorrowPage> createState() => _BorrowPageState();
 }
 
-class _ThirdPageState extends State<ThirdPage> {
+class _BorrowPageState extends State<BorrowPage> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -103,7 +103,7 @@ class _ThirdPageState extends State<ThirdPage> {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SecondPage()),
+                  MaterialPageRoute(builder: (context) => LendPage()),
                 );
               },
               child: Image(
@@ -117,7 +117,7 @@ class _ThirdPageState extends State<ThirdPage> {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FourthPage()),
+                  MaterialPageRoute(builder: (context) => LanPage()),
                 );
               },
               child: Image(
@@ -179,13 +179,13 @@ class _ThirdPageState extends State<ThirdPage> {
                       child: Column(
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Image(
                                 image: AssetImage('assets/image.png'),
                                 width: 20,
                                 height:20,
                               ),
-                              SizedBox(width: 5),
                               Text(
                                 borrowedItems[index]['UserEmail'],
                                 style: TextStyle(
@@ -195,12 +195,17 @@ class _ThirdPageState extends State<ThirdPage> {
                                 ),
                               ),
                               SizedBox(width:5),
-                              Text(
-                                'an hour ago',
-                                style: TextStyle(
-                                  fontFamily:'Poppins-Regular',
-                                  color: Colors.white,
-                                  fontSize: 10,
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                child: Text(
+                                  borrowedItems[index]['Timestamp'] != null
+                                      ? borrowedItems[index]['Timestamp'].toDate().toString()
+                                      : 'No Timestamp',
+                                  style: TextStyle(
+                                    fontFamily:'Poppins-Regular',
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                  ),
                                 ),
                               ),
                             ],

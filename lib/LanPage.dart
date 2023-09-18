@@ -10,14 +10,14 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'ChatScreen.dart';
 
-class FourthPage extends StatefulWidget {
-  FourthPage({super.key});
+class LanPage extends StatefulWidget {
+  LanPage({super.key});
 
   @override
-  State<FourthPage> createState() => _FourthPageState();
+  State<LanPage> createState() => _LanPageState();
 }
 
-class _FourthPageState extends State<FourthPage> {
+class _LanPageState extends State<LanPage> {
   TextEditingController ItemTitle = new TextEditingController();
 
   TextEditingController ItemDescription = new TextEditingController();
@@ -30,14 +30,16 @@ class _FourthPageState extends State<FourthPage> {
     if (pickedFile != null) {
       final image = File(pickedFile.path);
       if (await image.length() > 1024 * 1024) {
-        // Image size is greater than 1MB, show a message or handle accordingly
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Image Size Too Large"),
+              title: Text(
+                  "Image Size Too Large",
+              ),
               content: Text(
-                  "Please select an image that is less than 1MB in size."),
+                  "Please select an image that is less than 1MB in size.",
+              ),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -55,9 +57,7 @@ class _FourthPageState extends State<FourthPage> {
           imageFile = image; // Set the imageFile variable
         });
       }
-    }
-    else{
-
+    }else{
     }
   }
 
@@ -147,7 +147,7 @@ class _FourthPageState extends State<FourthPage> {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SecondPage()),
+                  MaterialPageRoute(builder: (context) => LendPage()),
                 );
               },
               child: Image(
@@ -172,7 +172,7 @@ class _FourthPageState extends State<FourthPage> {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ThirdPage()),
+                  MaterialPageRoute(builder: (context) => BorrowPage()),
                 );
               },
               child: Image(
@@ -227,7 +227,7 @@ class _FourthPageState extends State<FourthPage> {
                         onPressed: (){
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Fifthpage(),),
+                            MaterialPageRoute(builder: (context) => DanPage(),),
                           );
                         },
                         child:Text(
@@ -431,7 +431,7 @@ class _FourthPageState extends State<FourthPage> {
                                   "ItemDescription": ItemDescription.text,
                                   "UserEmail": userEmail,
                                   "SelectedDropdownoption":_current,
-                                  "Bookmarked":'false',
+                                  "Timestamp": FieldValue.serverTimestamp(),
                                 };
                                 try {
                                   if (imageFile != null) {
