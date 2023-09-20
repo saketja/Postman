@@ -214,13 +214,15 @@ class _BorrowPageState extends State<BorrowPage> {
                                               0.5,
                                           height: 120,
                                           padding:
-                                              EdgeInsets.fromLTRB(5, 10, 0, 0),
-                                          child: Text(
-                                            borrowedItems[index]
-                                                ['ItemDescription'],
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: 'Poppins-Regular',
+                                              EdgeInsets.fromLTRB(5, 10, 5, 0),
+                                          child: SingleChildScrollView(
+                                            child: Text(
+                                              borrowedItems[index]
+                                                  ['ItemDescription'],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: 'Poppins-Regular',
+                                              ),
                                             ),
                                           ),
                                         ),
