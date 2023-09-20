@@ -80,16 +80,19 @@ class _MyPostsState extends State<MyPosts> {
                                 ),
                               ),
                               SizedBox(width:5),
-                              Text(
-                                PostItems[index]['Timestamp'] != null
-                                    ? PostItems[index]['Timestamp']
-                                    .toDate()
-                                    .toString()
-                                    : 'No Timestamp',
-                                style: TextStyle(
-                                  fontFamily:'Poppins-Regular',
-                                  color: Colors.white,
-                                  fontSize: 10,
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                child: Text(
+                                  PostItems[index]['Timestamp'] != null
+                                      ? PostItems[index]['Timestamp']
+                                      .toDate()
+                                      .toString()
+                                      : 'No Timestamp',
+                                  style: TextStyle(
+                                    fontFamily:'Poppins-Regular',
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                  ),
                                 ),
                               ),
                             ],
